@@ -67,7 +67,7 @@ class QuizEngine {
         const q = this.questions[this.currentIndex];
         this.isAnswered = false;
         this.feedbackEl.classList.remove('show');
-        this.questionEl.textContent = q.question;
+        this.questionEl.textContent = q.question || q.text;
         this.optionsEl.innerHTML = '';
         this.currentQEl.textContent = this.currentIndex + 1;
         
