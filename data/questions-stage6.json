@@ -1,0 +1,32 @@
+[
+    {
+        "question": "リクエストの URL パス（例: /images/* など）を読み取って、特定のバックエンドサーバーへ通信を振り分けたい場合に最適なサービスはどれですか？",
+        "options": ["Azure Load Balancer (L4)", "Azure Application Gateway (L7)", "Azure ピアリング", "Azure Firewall"],
+        "answer": 1,
+        "explanation": "「Application Gateway」はレイヤー 7 に対応しており、URL のパスに基づいた高度な振り分け（パスベースルーティング）が可能です。L4 バランサーは IP とポートのみで判断します。"
+    },
+    {
+        "question": "インターネットからの SQL インジェクションやクロスサイトスクリプティング (XSS) 攻撃を自動的に検知・遮断するために Application Gateway と連携させる機能は何ですか？",
+        "options": ["Azure Sentinel", "WAF (ウェブアプリケーションファイアウォール)", "DDoS Protection", "Azure Policy"],
+        "answer": 1,
+        "explanation": "「WAF」を使用すると、アプリケーション層（L7）での不正アクセスを防止でき、安全な Web サイト公開に不可欠な防御機能です。"
+    },
+    {
+        "question": "全世界のユーザーに対してコンテンツを高速配信し、リージョンを跨いだグローバルな L7 分散と SSL 高速化を提供できる「モダンな CDN 統合バランサー」は何ですか？",
+        "options": ["Azure Front Door", "Azure Traffic Manager", "Azure Application Gateway", "Azure Load Balancer"],
+        "answer": 0,
+        "explanation": "「Front Door」は Microsoft のグローバルエッジネットワークを利用し、コンテンツのキャッシュやグローバルな L7 分散、DDoS 防御を統合した次世代の配信サービスです。"
+    },
+    {
+        "question": "HTTP 以外のプロトコルも含めて、DNS の名前解決の結果を地理的条件や優先順位に基づいて変更し、トラフィックを制御するためのサービスは何ですか？",
+        "options": ["Azure Front Door", "Azure Traffic Manager", "Azure Application Gateway", "Azure SQL DB"],
+        "answer": 1,
+        "explanation": "「Traffic Manager」は DNS ベースのロードバランサーであり、名前解決の結果（IP アドレス）を出し分けることで、リージョン間の可用性向上を支援します。パケット自体は中継しません。"
+    },
+    {
+        "question": "レイヤー 4 (L4) で高速にパケットを振り分け、VNet 内の内部アプリの負荷分散や非 HTTP サービスに最適なバランサーはどれですか？",
+        "options": ["Azure Load Balancer", "Azure Front Door", "Azure Application Gateway", "ExpressRoute"],
+        "answer": 0,
+        "explanation": "「Load Balancer」は L4 で動作するため非常に高速で、非 HTTP 通信（SQL やゲームサーバーなど）の分散や内部的な VNet 内分散の標準ツールです。"
+    }
+]

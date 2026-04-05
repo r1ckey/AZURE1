@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 8 AKS & コンテナ | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 8 CONTAINERS</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=8">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#aci">Container Instances (ACI)</a></li>
+                <li><a href="#acr">Container Registry (ACR)</a></li>
+                <li><a href="#aks">Kubernetes Service (AKS)</a></li>
+                <li><a href="#aks-scaling">AKS のスケーリング</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="aci" class="section">
+                <h2>Azure Container Instances (ACI)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>サーバーレス:</strong> サーバーのプロビジョニングや管理が一切不要。秒単位の課金。</li>
+                        <li><strong>素早い起動:</strong> 単一のコンテナを数秒で起動。一時的なバースト処理に最適。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>ACI は、最も手軽にコンテナを実行できるサービスです。Kubernetes のような複雑なオーケストレーションは不要で、「とにかく今すぐ、このコンテナイメージを動かしたい」という時に力を発揮します。データのバッチ処理や、CI/CD パイプラインの一時的な実行環境として非常に強力です。</p>
+                </div>
+            </section>
+
+            <section id="acr" class="section">
+                <h2>Azure Container Registry (ACR)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>プライベート管理:</strong> 自分の組織専用のコンテナイメージ保存庫（レジストリ）。</li>
+                        <li><strong>イメージスキャン:</strong> 保存されたイメージの脆弱性を自動でチェック（Defender 連携）。</li>
+                        <li><strong>作成・配信:</strong> リージョンを跨いでイメージをレプリケーションし、AKS への反映を高速化。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>ACR は、開発したコンテナをパッケージ化した「イメージ」を「安全に保管」する場所です。Docker Hub のプライベート版だと考えると理解しやすいでしょう。Azure コンピューティングサービス（AKS や App Service）と密に連携し、セキュアなデプロイを実現します。</p>
+                </div>
+            </section>
+
+            <section id="aks" class="section">
+                <h2>Azure Kubernetes Service (AKS)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>オーケストレータ:</strong> 多数のコンテナ（Pod）の配置、死活監視、負荷分散を自動化。</li>
+                        <li><strong>コントロールプレーン提供:</strong> 複雑な Kubernetes マスターの管理を Azure が無料（一部例外）で行う。</li>
+                        <li><strong>統合:</strong> VNet、Azure 認証、監視機能とワンクリックでシームレスに統合。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>AKS は、エンタープライズ向けの強力なコンテナ管理プラットフォームです。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph TD
+                        subgraph Managed["Managed by Azure"]
+                            CP[Control Plane / API Server]
+                        end
+                        subgraph Nodes["Customer Nodes (VMSS)"]
+                            node1[Node 1] --> p1[Pod A]
+                            node1 --> p2[Pod B]
+                            node2[Node 2] --> p3[Pod C]
+                        end
+                        LB[Azure Load Balancer] --> node1
+                        LB --> node2
+                        style CP fill:#0078d4,stroke:#fff;
+                        style node1 fill:#2c3e50,stroke:#fff;
+                        style node2 fill:#2c3e50,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="aks-scaling" class="section">
+                <h2>AKS のスケーリング機能</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>HPA (Horizontal Pod Autoscaler):</strong> コンテナの台数を負荷に応じて増減。</li>
+                        <li><strong>クラスターオートスケーラー:</strong> Pod が溢れたとき、自動でノード（サーバー）を追加。</li>
+                        <li><strong>バーチャルノード:</strong> 台数不足のとき、一時的に ACI を使ってサーバーレスに拡張。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>AKS の最大の魅力は「二段階のスケーリング」です。まずコンテナを増やし、もし物理的なサーバーリソースが足りなくなれば、自動的に Azure 仮想マシンが追加されます。これにより、急激なアクセス増に対してもシステムを停止させることなく対応できます。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>コンテナ技術をマスター！</h4>
+                    <p>スケーラブルなインフラを学んだら、最後にインフラの存在すら意識しない「サーバーレスと統合」の世界へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=8" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(8, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(8);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

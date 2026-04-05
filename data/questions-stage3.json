@@ -1,0 +1,32 @@
+[
+    {
+        "question": "リソースの管理（作成・更新）を行う権限は持っているが、他のユーザーに対して権限の割り当てを行うことはできない RBAC ロールはどれですか？",
+        "options": ["所有者 (Owner)", "共同作成者 (Contributor)", "閲覧者 (Reader)", "リソース管理者"],
+        "answer": 1,
+        "explanation": "「共同作成者 (Contributor)」はリソースのフル管理を行えますが、他のユーザーへ新しい RBAC 権限を付与すること（アクセス制御の割り当て）は「所有者 (Owner)」のみが可能です。"
+    },
+    {
+        "question": "Azure VM などのリソース自体に ID を付与し、プログラム内にパスワード等のシークレットを記述せずに他の Azure サービスへ安全にアクセスできる機能は何ですか？",
+        "options": ["Azure Bastion", "マネージド ID (Managed Identity)", "条件付きアクセス", "多要素認証 (MFA)"],
+        "answer": 1,
+        "explanation": "「マネージド ID」を使用すると、リソース自身が Azure 内部で自動管理されるアイデンティティを持ち、パスワードの管理なしで安全にトークン認証を行うことが可能になります。"
+    },
+    {
+        "question": "「東京リージョン以外でのリソース作成を禁止する」といったように、リソースの設定があるべき姿であることを強制するための機能は何ですか？",
+        "options": ["Azure Policy", "Azure Blueprints", "リソースグループ", "RBAC"],
+        "answer": 0,
+        "explanation": "「Azure Policy」は、組織内のルール（コンプライアンス）をリソースの設定レベルで強制するためのサービスです。"
+    },
+    {
+        "question": "リソースの削除や変更を、管理者権限を持つユーザーであっても「うっかり」操作できないように制限するための機能は何ですか？",
+        "options": ["Azure Policy", "リソースロック (Resource Lock)", "条件付きアクセス", "RBAC"],
+        "answer": 1,
+        "explanation": "「リソースロック」を設定すると、削除（CanNotDelete）や変更（ReadOnly）を制限でき、設定ミスの防止に極めて有効です。"
+    },
+    {
+        "question": "Microsoft Entra ID において、組織のインスタンス（管理単位）を指す用語は何ですか？",
+        "options": ["テナント (Tenant)", "ドメイン (Domain)", "ディレクトリ (Directory)", "サブスクリプション"],
+        "answer": 0,
+        "explanation": "Entra ID において、組織ごとに独立して提供される専用の ID 環境インスタンスを「テナント」と呼びます。"
+    }
+]

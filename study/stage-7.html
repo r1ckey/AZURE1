@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 7 監視・保護 | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 7 MONITORING</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=7">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#monitor">Azure Monitor</a></li>
+                <li><a href="#log-analytics">Log Analytics</a></li>
+                <li><a href="#backup">Azure Backup</a></li>
+                <li><a href="#asr">Site Recovery (ASR)</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="monitor" class="section">
+                <h2>Azure Monitor</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>メトリクス:</strong> CPU、メモリ、ディスク、ネットワークのパフォーマンス数値。</li>
+                        <li><strong>ログ:</strong> 各リソースのアクティビティや構成変更、OS 内のログ。</li>
+                        <li><strong>アラート:</strong> 数値が閾値を超えたらメールや Webhook で通知。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure Monitor は、統合的な監視のハブです。全てのリソースからメトリクスとログを収集します。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph LR
+                        R[Azure Resources] --> AM[Azure Monitor]
+                        AM --> LA[Log Analytics:分析]
+                        AM --> AI[App Insights:APM]
+                        AM --> AL[Alerts:通知]
+                        AL --> AG[Action Groups:メール/SMS]
+                        style AM fill:#0078d4,stroke:#fff;
+                        style LA fill:#6f42c1,stroke:#fff;
+                        style AL fill:#e74c3c,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="log-analytics" class="section">
+                <h2>Log Analytics (KQL)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>一元管理:</strong> 複数の VM やサービスから大量のログを一つのワークスペースに集約。</li>
+                        <li><strong>KQL:</strong> Kusto Query Language による強力な検索と分析。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>膨大なログの中から「エラーが発生した時間帯の不審な操作」を見つけ出す際に活躍します。SQL に似た <strong>KQL</strong> という独自言語を使用して、数百万件のログから瞬時に結果を抽出・グラフ化できます。インシデント調査の強力な味方です。</p>
+                </div>
+            </section>
+
+            <section id="backup" class="section">
+                <h2>Azure Backup</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>Recovery Services Vault:</strong> バックアップデータを安全に保管する「金庫」。</li>
+                        <li><strong>ファイルレベル復元:</strong> VM 全体だけでなく、中の特定のファイルだけを書き戻す。</li>
+                        <li><strong>長期保管:</strong> セキュリティコンプライアンス等で必要な数年単位の保存。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>誤操作によるデータの消失や、不審なランサムウェアによるファイル破壊からシステムを守るための唯一の砦です。Azure VM、SQL DB、Azure Files などのバックアップ設定を、エージェントを最小限に抑えながらシンプルに自動化できます。</p>
+                </div>
+            </section>
+
+            <section id="asr" class="section">
+                <h2>Azure Site Recovery (ASR)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>災害対策 (DR):</strong> リージョン規模の障害時に、他リージョンの VM を起動（レプリケーション）。</li>
+                        <li><strong>RTO / RPO:</strong> 目標復旧時間 (RTO) と目標復旧時点 (RPO) を最小限に抑えた継続性を実現。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>ASR は単なるバックアップではなく「予備機への瞬時の切り替え」を行うサービスです。プライマリリージョンが壊れても、設定済みのセカンダリリージョンで数分以内にビジネスを再開させる、高度な可用性設計の中核を担います。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>監視と保護をマスター！</h4>
+                    <p>システムの安定稼働を学んだら、次は現代的なモダン開発の象徴である「AKS (Kubernetes) とコンテナ」へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=7" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(7, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(7);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 2 VM & コンピューティング | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 2 COMPUTE</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=2">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#vm">Azure Virtual Machines</a></li>
+                <li><a href="#availability">高可用性設計 (Availability)</a></li>
+                <li><a href="#vmss">VMSS (スケールセット)</a></li>
+                <li><a href="#paas">Azure App Service</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="vm" class="section">
+                <h2>Azure Virtual Machines (VM)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>IaaS:</strong> OS レベルの管理が可能。カスタマイズ性が最も高い。</li>
+                        <li><strong>VM サイズ:</strong> A, D (汎用), E (メモリ), F (計算) など用途別に選択。</li>
+                        <li><strong>スポット VM:</strong> 未使用のリソースを大幅割引で購入（中断のリスクあり）。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure VM は、クラウド上の「仮想サーバー」です。Linux や Windows などの OS を選び、CPU やメモリのサイズを自由に変更できます。Azure の VM サイズには名前のルールがあり、例えば <strong>D-シリーズ</strong> はバランスの取れた汎用向け、<strong>E-シリーズ</strong> は大容量メモリを必要とする分析などに向いています。</p>
+                </div>
+            </section>
+
+            <section id="availability" class="section">
+                <h2>高可用性設計 (可用性セット / 可用性ゾーン)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>障害ドメイン (Fault Domain):</strong> 物理的なラック（電源やスイッチ）を共有する単位。</li>
+                        <li><strong>更新ドメイン (Update Domain):</strong> 同時に再起動される単位。パッチ適用時の停止を防ぐ。</li>
+                        <li><strong>可用性ゾーン (AZ):</strong> さらに広い範囲（建物単位）での冗長化。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>可用性セット (Availability Sets) を使用すると、複数の VM が同じ物理的な「ラック」に配置されないよう調整できます。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph LR
+                        subgraph FD0[障害ドメイン 0]
+                            VM1[VM 1]
+                        end
+                        subgraph FD1[障害ドメイン 1]
+                            VM2[VM 2]
+                        end
+                        subgraph FD2[障害ドメイン 2]
+                            VM3[VM 3]
+                        end
+                        style FD0 fill:#2c3e50,stroke:#fff;
+                        style FD1 fill:#2c3e50,stroke:#fff;
+                        style FD2 fill:#2c3e50,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="vmss" class="section">
+                <h2>Virtual Machine Scale Sets (VMSS)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>スケーリング:</strong> 負荷に応じて VM の台数を自動で増減（オートスケール）。</li>
+                        <li><strong>一貫性:</strong> 同じ構成の VM を大量に、素早く展開。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>VMSS は、同一構成の VM 群を「一つのグループ」として管理する仕組みです。トラフィックが急増した時に自動的にサーバーを追加し、負荷が下がれば削減することで、コストの無駄を省きつつ安定したサービスを提供できます。</p>
+                </div>
+            </section>
+
+            <section id="paas" class="section">
+                <h2>Azure App Service (PaaS)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>PaaS:</strong> サーバー管理は完全に Azure 側。コードを置くだけで Web サイトが動く。</li>
+                        <li><strong>スロット:</strong> 本番とステージング環境をワンクリックで入れ替え（スワップ）。</li>
+                        <li><strong>マネージドセキュリティ:</strong> 証明書の管理や脆弱性対応も Azure がサポート。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>App Service は、Web アプリケーション、API、モバイルのバックエンドに最適な完全マネージドなプラットフォームです。サーバー管理が一切不要で、開発者はプログラムコードの開発に集中できます。デプロイスロット機能を使えば、新しいバージョンを裏側でテストし、問題がなければ一瞬で本番と切り替えることが可能です。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>コンピューティングをマスター！</h4>
+                    <p>次は、ユーザーや権限をスマートに管理する「Entra ID (Azure AD)」の世界へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=2" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(2, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(2);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

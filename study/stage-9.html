@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 9 サーバーレス & 統合 | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 9 SERVERLESS</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=9">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#functions">Azure Functions</a></li>
+                <li><a href="#logic-apps">Logic Apps (ワークフロー)</a></li>
+                <li><a href="#event-grid">Event Grid (イベント駆動)</a></li>
+                <li><a href="#service-bus">Service Bus (疎結合)</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="functions" class="section">
+                <h2>Azure Functions (FaaS)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>サーバーレス:</strong> インフラ管理不要。コードをアップロードするだけで特定のトリガーで動作。</li>
+                        <li><strong>従量課金プラン:</strong> 実行回数と実行時間のみ課金。アイドルコストはゼロ。</li>
+                        <li><strong>汎用性:</strong> HTTP リクエスト、タイマー、DB の更新などをきっかけに動作。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure Functions は、現代の「サーバーを意識させない」開発の主軸です。Web API のエンドポイントを即座に作成したり、ストレージにファイルがアップロードされた瞬間に画像処理（リサイズ等）を実行したりと、非常に高い柔軟性を誇ります。</p>
+                </div>
+            </section>
+
+            <section id="logic-apps" class="section">
+                <h2>Azure Logic Apps</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>ローコード:</strong> 視覚的なデザイナーで、多数のサービス間を繋ぐワークフローを作成。</li>
+                        <li><strong>コネクタ:</strong> Office 365, Slack, Salesforce など、Azure 以外の外部サービスとも容易に連携。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>複雑なプログラムコードを書かなくても、「特定のメールが届いたらデータを抽出し、SQL に保存して Slack に通知する」といったビジネスオートメーションが可能です。Azure の各種サービスを「糊（のり）」のように繋げる、非常に強力な統合ツールです。</p>
+                </div>
+            </section>
+
+            <section id="event-grid" class="section">
+                <h2>Azure Event Grid</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>イベントルーティング:</strong> 「リソースが作成された」といったイベントをリアルタイムに検知し、適切な処理先へ通知。</li>
+                        <li><strong>疎結合:</strong> 送信側と受信側を直接繋がない、柔軟な設計（Event-driven）を支える。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Event Grid は、Azure における「イベント」の交通整理役です。疎結合なアーキテクチャを支えます。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph LR
+                        S[Azure Storage] -- ファイルアップロード --> EG[Event Grid]
+                        EG -- ルーティング --> AF[Azure Functions]
+                        AF -- 処理結果保存 --> DB[Cosmos DB]
+                        style S fill:#0078d4,stroke:#fff;
+                        style EG fill:#f1c40f,stroke:#222;
+                        style AF fill:#28a745,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="service-bus" class="section">
+                <h2>Azure Service Bus (メッセージング)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>エンタープライズ統合:</strong> 信頼性の高いメッセージキュー（順番待ち）を提供。</li>
+                        <li><strong>疎結合の極み:</strong> 受信側が一時的に忙しくても、キューにメッセージを溜めておくことでデータを喪失しない。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Service Bus は、システム間の通信を「非同期」に行うための重厚なメッセージングサービスです。数百万というメッセージを順番に、かつ確実に処理するための FIFO（先入れ先出し）や、特定の条件（トピック）に合致した受信側だけにデータを送る高度なフィルタリングもサポートします。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>全ステージ完了！おめでとうございます！</h4>
+                    <p>Azure の主要なインフラ・プラットフォームの学習をすべて完走しました。最後にクイズに挑戦して、全制覇を目指しましょう！</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=9" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(9, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(9);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

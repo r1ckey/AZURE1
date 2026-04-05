@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Challenge: Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/quiz.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span id="title-stage">CHALLENGE</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="#" id="back-to-study">学習に戻る</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div id="quiz-container" class="quiz-container">
+            <div class="quiz-header">
+                <div class="quiz-progress-bar">
+                    <div id="quiz-progress"></div>
+                </div>
+                <div class="quiz-counter">Question <span id="current-q">1</span> / <span id="total-q">--</span></div>
+            </div>
+
+            <div id="question" class="question-text">読み込み中...</div>
+            <div id="options" class="options-container"></div>
+            
+            <div id="feedback" class="feedback">
+                <div id="result-status" class="result"></div>
+                <div id="explanation" class="explanation"></div>
+                <button id="next-btn" class="btn btn-primary">次へ進む (Enter)</button>
+                <div class="hint">1〜4のキーで回答できます</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script src="../js/quiz-engine.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const stageId = parseInt(urlParams.get('stage')) || 0;
+        document.getElementById('title-stage').textContent = `STAGE ${stageId} CHALLENGE`;
+        document.getElementById('back-to-study').href = `../study/stage-${stageId}.html`;
+        const quiz = new QuizEngine(stageId);
+    </script>
+</body>
+</html>

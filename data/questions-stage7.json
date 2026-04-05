@@ -1,0 +1,32 @@
+[
+    {
+        "question": "リソースの CPU 使用率やメモリ負荷など、短期間のパフォーマンス数値（統計データ）を収集し、ほぼリアルタイムに監視できる機能はどれですか？",
+        "options": ["Azure Monitor メトリクス", "Azure Monitor ログ", "Azure Sentinel", "Azure Advisor"],
+        "answer": 0,
+        "explanation": "「メトリクス」は数値データに特化しており、軽快で高速な可視化とアラート通知に適しています。ログはテキストベースの詳細な履歴データです。"
+    },
+    {
+        "question": "Log Analytics ワークスペースに保存された大量のデータを検索し、分析結果をグラフ化するために使用される専用言語は何ですか？",
+        "options": ["SQL", "Azure CLI", "KQL (Kusto クエリ言語)", "JSON"],
+        "answer": 2,
+        "explanation": "Azure のログ分析では SQL に似た独自の「KQL」を使用します。非常に強力なフィルタリングと言約機能を備えています。"
+    },
+    {
+        "question": "アラート（閾値超過等）が発生したときに、誰にどのような手段（メール、SMS、Webhook）で知らせるかを定義するグループを何と呼びますか？",
+        "options": ["管理グループ", "アラートグループ", "アクション・グループ", "リソースグループ"],
+        "answer": 2,
+        "explanation": "Azure Monitor では「アクション・グループ」を使用して、通知先と通知方法を共通化・再利用できるように設計されています。"
+    },
+    {
+        "question": "不慮の削除やデータ破壊から VM やファイルを保護し、バックアップデータを安全に保管するための『論理的な金庫』の名前は何ですか？",
+        "options": ["Key Vault", "Recovery Services コンテナー (Vault)", "ストレージアカウント", "可用性セット"],
+        "answer": 1,
+        "explanation": "Azure Backup を利用する際は、「Recovery Services コンテナー」をまず作成し、そこにデータを格納します。"
+    },
+    {
+        "question": "リージョン全体がダウンするような大规模災害に備え、別のリージョンへ VM 等を複製し、災害時に素早くビジネスを再開（フェイルオーバー）させるためのサービスはどれですか？",
+        "options": ["Azure Backup", "Azure Site Recovery (ASR)", "Azure Traffic Manager", "ExpressRoute"],
+        "answer": 1,
+        "explanation": "「ASR」は、高レベルな継続性（可用性）を確保するための災害対策 (DR) 専用サービスです。バックアップ（データの保護）とは異なり、サーバーの稼働再開（切り替え）に重きを置いています。"
+    }
+]

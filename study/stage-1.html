@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 1 VNet & ネットワーク | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 1 NETWORK</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=1">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#vnet">Virtual Network (VNet)</a></li>
+                <li><a href="#security">NSG とセキュリティ</a></li>
+                <li><a href="#peering">VNet ピアリング</a></li>
+                <li><a href="#onprem">オンプレミス接続</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="vnet" class="section">
+                <h2>Virtual Network (VNet) の基本</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>VNet:</strong> Azure 上の隔離された仮想プライベートネットワーク。</li>
+                        <li><strong>サブネット:</strong> VNet を用途ごとに切り分けた範囲。特定の AZ には紐付かず、VNet 全域に展開。</li>
+                        <li><strong>プライベート IP:</strong> VNet 内のリソース間通信に使用されるアドレス。</li>
+                    </ul>
+                </div>
+                <img src="../images/azure_vnet_architecture_diagram.png" alt="Azure VNet Architecture Diagram" class="architecture-diagram">
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure のネットワークにおける最小単位が <strong>Virtual Network (VNet)</strong> です。AWS と異なり、サブネット自体は可用性ゾーン (AZ) に限定されず、VNet 全体（リージョン全体）をカバーするように設計されています。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph TD
+                        HUB[Hub VNet (Shared Services)] <--> S1[Spoke A (Web)]
+                        HUB <--> S2[Spoke B (SQL)]
+                        HUB --> GW[VPN Gateway / ExpressRoute]
+                        S1 --> SN1[Subnet 1]
+                        S1 --> SN2[Subnet 2]
+                        style HUB fill:#0078d4,stroke:#fff,stroke-width:2px;
+                        style S1 fill:#28a745,stroke:#fff;
+                        style S2 fill:#28a745,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="security" class="section">
+                <h2>NSG (Network Security Group) とセキュリティ</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>NSG:</strong> ポート、IP、プロトコルに基づいてトラフィックを許可/拒否。</li>
+                        <li><strong>適用単位:</strong> サブネット、または個別の NIC (仮想カード) に適用。</li>
+                        <li><strong>優先順位:</strong> 番号が小さいほど（例: 100）優先される。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure では、<strong>ネットワークセキュリティグループ (NSG)</strong> を使って通信を制御します。「ソース」「宛先」「ポート番号」と「優先順位」を指定して、強固なファイアウォールの役割を果たします。</p>
+                    <p>また、<strong>ASG (Application Security Group)</strong> を併用すれば、IP アドレスを直接指定する代わりに「WebServers」といったグループ名で NSG ルールをシンプルに保つことができます。</p>
+                </div>
+            </section>
+
+            <section id="peering" class="section">
+                <h2>VNet ピアリング</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>直接接続:</strong> 異なる VNet 同士を、Azure 内部ネットワークを使用して安全に接続。</li>
+                        <li><strong>低レイテンシー:</strong> 公衆インターネットを経由しない高速な通信。</li>
+                        <li><strong>グローバルピアリング:</strong> 異なるリージョン間の VNet 接続も可能。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>VNet ピアリングは、異なる仮想ネットワーク同士をシームレスに結合するための仕組みです。Hub-and-Spoke 構成など、複雑なネットワークトポロジを構築する際の中心的な役割を担います。ピアリングされた VNet 同士は、あたかも一つのネットワークであるかのように通信できます。</p>
+                </div>
+            </section>
+
+            <section id="onprem" class="section">
+                <h2>オンプレミス接続 (VPN と ExpressRoute)</h2>
+                <div class="summary-card">
+                    <table style="width:100%; border-collapse: collapse; margin-top: 1rem; color: var(--azure-text);">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--azure-blue);">
+                                <th style="text-align:left; padding: 12px;">比較項目</th>
+                                <th style="text-align:left; padding: 12px;">VPN Gateway</th>
+                                <th style="text-align:left; padding: 12px;">ExpressRoute</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 12px;">伝送路</td>
+                                <td style="padding: 12px;">インターネット（暗号化）</td>
+                                <td style="padding: 12px;">専用の物理回線</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px;">帯域幅</td>
+                                <td style="padding: 12px;">最大 10 Gbps (世代による)</td>
+                                <td style="padding: 12px;">最大 100 Gbps</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px;">安定性/コスト</td>
+                                <td style="padding: 12px;">安価、変動あり</td>
+                                <td style="padding: 12px;">高額、極めて安定</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>オンプレミス拠点（自社オフィスや他社クラウド）と Azure を接続する場合、まずは <strong>VPN Gateway</strong> による暗号化接続を検討します。さらに高い安定性と広帯域、そして公衆インターネットを完全に避けたい要件があれば、<strong>ExpressRoute</strong> という専用回線を導入します。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>Azure ネットワークをマスター！</h4>
+                    <p>基盤が整ったら、次は仮想サーバー (VM) や高度な「コンピューティング」の活用へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=1" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(1, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(1);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

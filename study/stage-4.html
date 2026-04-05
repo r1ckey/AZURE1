@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 4 Azure ストレージ | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 4 STORAGE</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=4">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#storage-acc">ストレージアカウント</a></li>
+                <li><a href="#redundancy">データの冗長性</a></li>
+                <li><a href="#blob-tiers">Blob アクセス層</a></li>
+                <li><a href="#files">Azure Files (共有)</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="storage-acc" class="section">
+                <h2>ストレージアカウント</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>Blob ストレージ:</strong> オブジェクト（ファイル）保存。</li>
+                        <li><strong>Azure Files:</strong> SMB/NFS 互換のファイル共有（ファイルサーバー）。</li>
+                        <li><strong>Azure Queues / Tables:</strong> メッセージや簡易データの保存。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure のストレージサービスの全ての入り口となるのが <strong>ストレージアカウント</strong> です。非構造化データ（画像やバックアップ）の保存に最適な Blob や、既存のファイルサーバーをクラウド化するための Azure Files など、多岐にわたる用途を一括管理します。</p>
+                </div>
+            </section>
+
+            <section id="redundancy" class="section">
+                <h2>データの冗長性 (Redundancy)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>LRS (ローカル冗長):</strong> 単一のデータセンター内で 3 つコピー。最も安価。</li>
+                        <li><strong>ZRS (ゾーン冗長):</strong> リージョン内の 3 つの AZ に分散。AZ 単位の障害に耐える。</li>
+                        <li><strong>GRS (ジオ冗長):</strong> リージョンペア（遠隔地）に自動コピー。大規模災害に備える。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure では、ストレージアカウント作成時に <strong>冗長性レベル</strong> を選択します。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph LR
+                        subgraph RegionA[リージョン A (東日本)]
+                            LRS[LRS: DC 内に 3 コピー]
+                            ZRS[ZRS: 3 つの AZ に分散]
+                        end
+                        RegionA -- ジオレプリケーション --> RegionB[リージョン B (西日本)]
+                        RegionB --> GRS[GRS: 遠隔地へコピー]
+                        style RegionA fill:#001d35,stroke:#0078d4;
+                        style RegionB fill:#001d35,stroke:#0078d4;
+                        style GRS fill:#28a745,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="blob-tiers" class="section">
+                <h2>Blob アクセス層とライフサイクル管理</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>ホット層:</strong> 頻繁にアクセスするデータ。保存コスト高、転送コスト低。</li>
+                        <li><strong>クール層/クール(Cold)層:</strong> たまにアクセスするデータ。保存コストは抑えられる。</li>
+                        <li><strong>アーカイブ層:</strong> ほぼアクセスしない保存用。最安だが、取り出し（リハイドレート）に数時間。</li>
+                        <li><strong>ライフサイクル管理:</strong> 日数経過で自動的に層を移動。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>データの「鮮度」に合わせて保存場所を最適化することで、コストを大幅に削減できます。さらに「作成から 30 日経過したファイルは自動的にクール層へ」といった自動化を <strong>ライフサイクル管理</strong> で設定することが推奨されます。</p>
+                </div>
+            </section>
+
+            <section id="files" class="section">
+                <h2>Azure Files</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>共有ストレージ:</strong> SMB または NFS プロトコルで、VM もオンプレミスも同時接続可能。</li>
+                        <li><strong>Azure File Sync:</strong> オンプレミスの物理ファイルサーバーの中身を Azure と同期・拡張。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Windows ファイルサーバーをクラウドに移行する際に最も便利なサービスです。既存のネットワークドライブ設定をそのまま利用できるため、アプリケーションの改修なしでクラウド化を推進できます。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>Azure ストレージをマスター！</h4>
+                    <p>分散データの保存を学んだら、次は構造化されたデータを扱う「SQL / Cosmos DB」の世界へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=4" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(4, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(4);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

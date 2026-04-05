@@ -1,0 +1,32 @@
+[
+    {
+        "question": "サーバーの構築や管理を一切行わず、単一のコンテナイメージを数秒で起動・実行できるサーバーレスなコンテナ環境は何ですか？",
+        "options": ["Azure Container Instances (ACI)", "Azure Virtual Machines", "Azure App Service", "Azure Kubernetes Service (AKS)"],
+        "answer": 0,
+        "explanation": "「ACI」は、インフラの管理なしにコンテナを実行できる最速かつ最もシンプルな方法です。"
+    },
+    {
+        "question": "コンテナイメージを組織内で安全に保存・管理・共有し、脆弱性スキャンなどの機能も備えたプライベートレジストリサービスはどれですか？",
+        "options": ["Azure Blob Storage", "Azure Container Registry (ACR)", "Docker Hub Public", "Azure NetApp Files"],
+        "answer": 1,
+        "explanation": "「ACR」は Azure 上で管理されるプライベートな Docker レジストリであり、Azure の各コンピューティングサービスと連携してセキュアな展開を支えます。"
+    },
+    {
+        "question": "Kubernetes のコントロールプレーン（マスターノード）の管理を Azure が行い、ユーザーはアプリケーションのデプロイに集中できるマネージドサービスはどれですか？",
+        "options": ["Azure Virtual Machines", "Azure Kubernetes Service (AKS)", "Azure Batch", "Azure Front Door"],
+        "answer": 1,
+        "explanation": "「AKS」を使用することで、Kubernetes クラスターの運用負担を大幅に軽減できます。"
+    },
+    {
+        "question": "AKS において、CPU やメモリの負荷状況に基づいて、ポッド（コンテナインスタンス）の数を自動的に増減させる機能は何ですか？",
+        "options": ["クラスターオートスケーラー", "垂直ポッドオートスケーラー", "HPA (水平ポッドオートスケーラー)", "AKS アップグレード"],
+        "answer": 2,
+        "explanation": "「HPA (Horizontal Pod Autoscaler)」は、アプリケーション内部の負荷に応じてコンテナ自体の数を調整します。もしサーバー自体のリソースが足りなくなった場合は「クラスターオートスケーラー」がノード（VM）を追加します。"
+    },
+    {
+        "question": "AKS のキャパシティが不足した瞬間、一時的に Azure Container Instances (ACI) をサーバーとして利用してバースト処理を行う機能を何と呼びますか？",
+        "options": ["ピアリング", "バーチャルノード (Virtual Nodes)", "可用性ゾーン", "近接配置グループ"],
+        "answer": 1,
+        "explanation": "「バーチャルノード」機能を使うと、AKS クラスターが物理的なサーバー（ノード）を追加するのを待たずに、即座にコンテナを ACI 上で起動して負荷を捌くことができます。"
+    }
+]

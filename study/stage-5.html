@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 5 SQL & Cosmos DB | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 5 DATABASE</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=5">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#sql-db">Azure SQL Database</a></li>
+                <li><a href="#failover">自動フェイルオーバー</a></li>
+                <li><a href="#cosmos">Azure Cosmos DB</a></li>
+                <li><a href="#consistency">一貫性レベル</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="sql-db" class="section">
+                <h2>Azure SQL Database (PaaS)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>マネージド:</strong> OS やデータベースのパッチ適用は全て Azure が自動で行う。</li>
+                        <li><strong>スケーリング:</strong> vCore モデルや DTU モデルを選択可能。</li>
+                        <li><strong>弾力性プール (Elastic Pool):</strong> 複数のデータベースでリソースを共有してコスト削減。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure SQL Database は、高い互換性と信頼性を備えたマネージドなリレーショナルデータベースです。特に <strong>Business Critical 層</strong> を選べば、非常に高い IOPS と低いレイテンシー、そして高速なリカバリが保証されます。また、多数の小規模な DB を並行稼働させるなら <strong>弾力性プール</strong> でリソースをまとめ、個別のピークを相殺して費用を抑える設計が可能です。</p>
+                </div>
+            </section>
+
+            <section id="failover" class="section">
+                <h2>自動フェイルオーバーとリージョン地理レプリケーション</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>アクティブ地理レプリケーション:</strong> 最大 4 つのセカンダリリージョンへデータを非同期コピー。</li>
+                        <li><strong>オートフェイルオーバーグループ:</strong> 読み取り用・書き込み用のエンドポイントを自動で切り替え。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>万が一リージョン規模の障害が発生しても、あらかじめ <strong>オートフェイルオーバーグループ</strong> を組んでおけば可用性を維持できます。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph TD
+                        App[Application] -- 接続用エンドポイント --> EP(Failover Group Listener)
+                        EP -- Active --> DB_P[Primary Azure SQL]
+                        DB_P -. レプリケーション .-> DB_S[Secondary Azure SQL]
+                        EP -.障害時に切り替え.-> DB_S
+                        style DB_P fill:#0078d4,stroke:#fff;
+                        style DB_S fill:#34495e,stroke:#fff;
+                        style EP fill:#f1c40f,stroke:#222;
+                    </div>
+                </div>
+            </section>
+
+            <section id="cosmos" class="section">
+                <h2>Azure Cosmos DB (NoSQL)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>グローバル分散:</strong> 世界中にデータをボタン一つで配信可能。</li>
+                        <li><strong>マルチモデル:</strong> SQL API、MongoDB、Cassandra などの API をサポート。</li>
+                        <li><strong>超高速な応答:</strong> 読み取り・書き込みともに 1 桁ミリ秒以内の低遅延。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Cosmos DB は、現代的なWebアプリやモバイル、ゲーム開発に最適な分散型データベースです。スキーマレスなデータを保存でき、何万件ものトラフィックを瞬時に処理する高いスケーラビリティが最大の特徴です。さらに、世界中のどこからでも低レイテンシーでデータにアクセスできるよう、複数リージョンでの同時書き込み（マルチマスター）にも対応しています。</p>
+                </div>
+            </section>
+
+            <section id="consistency" class="section">
+                <h2>5 つの一貫性レベル</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>1. 強固 (Strong):</strong> 全ての読み取りで直前の書き込みが反映されることを保証。</li>
+                        <li><strong>2. セッション (Session):</strong> 同一ユーザー（セッション）内での読み取り一貫性を保証。既定。</li>
+                        <li><strong>3. 最終的 (Eventual):</strong> いずれどこかで同期されるが、一時的に古いデータが見える可能性がある。最速。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Cosmos DB の設計で最も面白いのが、<strong>一貫性と速度（パフォーマンス）のトレードオフ</strong> を 5 つのレベルから選べる点です。厳密なデータの一致が必要な銀行系アプリなら「強固」、一般的な SNS 等なら「セッション」など、用途に合わせて柔軟にエンジニアリングできます。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>Azure データベースをマスター！</h4>
+                    <p>高いスケーラビリティを学んだら、次はシステムの入り口を支える「ロードバランサーとコンテンツ配信」へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=5" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(5, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(5);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

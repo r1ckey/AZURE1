@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study: Stage 0 Azure 基礎 | Azure Mastery Journey</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/study.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html">Azure Learning</a> <span>STAGE 0 STUDY</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">ロードマップ</a></li>
+                <li><a href="../quiz/page.html?stage=0">クイズに挑戦</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="study-layout">
+        <aside class="sidebar">
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#hierarchy">Azure の階層構造</a></li>
+                <li><a href="#infra">グローバルインフラ</a></li>
+                <li><a href="#arm">Azure Resource Manager</a></li>
+                <li><a href="#governance">ガバナンスの基本</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-content">
+            <section id="hierarchy" class="section">
+                <h2>Azure の管理階層構造</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>管理グループ:</strong> 複数のサブスクリプションを束ねる最上位。</li>
+                        <li><strong>サブスクリプション:</strong> 課金とアクセスの単位。</li>
+                        <li><strong>リソースグループ (RG):</strong> 関連するリソースを論理的にまとめる箱。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure の最大の特徴は、この強固な階層構造にあります。<strong>リソース ＞ リソースグループ ＞ サブスクリプション ＞ 管理グループ</strong>という順に大きくなり、上位で設定したポリシーやアクセス権（RBAC）は下位へ自動的に継承されます。</p>
+                    <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                    graph TD
+                        MG[管理グループ (Management Groups)] --> Sub1[サブスクリプション A]
+                        MG --> Sub2[サブスクリプション B]
+                        Sub1 --> RG1[リソースグループ (本番)]
+                        Sub1 --> RG2[リソースグループ (開発)]
+                        RG1 --> VM[VM / SQL / Web]
+                        style MG fill:#0078d4,stroke:#fff,stroke-width:2px;
+                        style Sub1 fill:#28a745,stroke:#fff;
+                        style RG1 fill:#6f42c1,stroke:#fff;
+                    </div>
+                </div>
+            </section>
+
+            <section id="infra" class="section">
+                <h2>グローバルインフラストラクチャ</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>リージョン:</strong> 地理的な境界。東日本、西日本など。</li>
+                        <li><strong>可用性ゾーン (AZ):</strong> リージョン内の独立したデータセンター群。</li>
+                        <li><strong>リージョンペア:</strong> 300マイル以上離れたリージョン同士のペア（災害対策）。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure は世界中に 60 以上のリージョンを展開しています。各リージョン内には、電源や冷却が独立した複数の<strong>可用性ゾーン (AZ)</strong> が存在し、これらを活用することで高い可用性を実現します。</p>
+                    <p><strong>リージョンペア</strong>（例: 東日本と西日本）を活用すれば、万が一大規模な災害が発生しても、自動的に他方のリージョンへデータを守る体制が構築できます。</p>
+                </div>
+            </section>
+
+            <section id="arm" class="section">
+                <h2>Azure Resource Manager (ARM)</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>単一の入り口:</strong> 全ての操作（ポータル、CLI、SDK）は ARM 経由で行われる。</li>
+                        <li><strong>宣言型管理:</strong> ARM テンプレート (JSON/Bicep) により、コードでインフラを定義。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>ARM は Azure の管理プレーンの頭脳です。あなたがマウスでリソースを作成しても、コマンドラインで実行しても、全て ARM が受け取って一貫性のある方法で処理します。</p>
+                </div>
+            </section>
+
+            <section id="governance" class="section">
+                <h2>ガバナンスとアクセス管理の基本</h2>
+                <div class="summary-card">
+                    <ul>
+                        <li><strong>RBAC:</strong> 「誰が」「何を」できるかを役割（ロール）で管理。</li>
+                        <li><strong>Azure Policy:</strong> リソースの「あるべき姿」を強制（例: インスタンスサイズの禁止）。</li>
+                        <li><strong>Azure Blueprints:</strong> 環境全体（RG、Policy、RBAC、ARM）のひな型。</li>
+                    </ul>
+                </div>
+                <button class="details-toggle"><span>詳細を解説</span> ⌄</button>
+                <div class="details-content">
+                    <p>Azure でのアクセス管理は <strong>RBAC (Role-Based Access Control)</strong> を中心に行います。また、設定ミスによるセキュリティ事故を防ぐために、あらかじめ「東京リージョン以外には作成禁止」といったルールを <strong>Azure Policy</strong> で定義しておくことがエンタープライズ利用では必須となります。</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <div>
+                    <h4>基礎を習得！おめでとうございます！</h4>
+                    <p>Azure の全体像が掴めたら、次は最も重要な「VNet (仮想ネットワーク)」の世界へ進みましょう。</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="complete-btn" class="btn btn-outline" onclick="completeStudy()">学習完了にする</button>
+                    <a href="../quiz/page.html?stage=0" class="btn btn-primary">クイズへ挑戦</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/progress.js"></script>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const span = button.querySelector('span');
+                content.classList.toggle('open');
+                span.textContent = content.classList.contains('open') ? '解説を閉じる' : '詳細を解説';
+            });
+        });
+
+        function completeStudy() {
+            ProgressManager.updateStage(0, { studyCompleted: true });
+            const btn = document.getElementById('complete-btn');
+            btn.textContent = '✅ 学習完了済み';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const progress = ProgressManager.getStageProgress(0);
+            if (progress.studyCompleted) {
+                const btn = document.getElementById('complete-btn');
+                btn.textContent = '✅ 学習完了済み';
+                btn.disabled = true;
+                btn.classList.add('btn-success');
+            }
+        });
+    </script>
+</body>
+</html>

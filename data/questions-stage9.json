@@ -1,0 +1,32 @@
+[
+    {
+        "question": "サーバーの存在を意識することなく、プログラムを実行したときだけ秒単位で課金される Azure の代表的な FaaS サービスは何ですか？",
+        "options": ["Azure Virtual Machines", "Azure Functions", "Azure App Service", "Azure SQL DB"],
+        "answer": 1,
+        "explanation": "「Azure Functions」は、リクエストや何かのトリガーがあったときにだけ起動し、実行分だけ課金されるサーバーレスなコンピューティング環境（FaaS）です。"
+    },
+    {
+        "question": "プログラムコードをほぼ書かずに、視覚的なデザイナーを使用して Office 365 や Slack、Salesforce など数百の外部サービスと連携したワークフローを作成できるサービスはどれですか？",
+        "options": ["Azure Logic Apps", "Azure Functions", "Azure Service Bus", "Azure Front Door"],
+        "answer": 0,
+        "explanation": "「Logic Apps」は、ローコードな開発体験と豊富なコネクタを提供し、ビジネスプロセスの自動化を支援します。"
+    },
+    {
+        "question": "「リソースが作成された」といった何らかの状態変化（イベント）をリアルタイムに検知し、適切な後続処理（Functions 等）へ一気にルーティング（ファンアウト）するためのサービスは何ですか？",
+        "options": ["Azure Traffic Manager", "Azure Event Grid", "Azure Service Bus", "Azure Backup"],
+        "answer": 1,
+        "explanation": "「Event Grid」は、イベント駆動型アーキテクチャを実現するための軽量かつ高速なイベント・ルーティング・サービスです。"
+    },
+    {
+        "question": "システム同士を直接繋がず、メッセージを一度「貯めておく」ことで、受信側のピーク負荷を吸収したり、データの損失を防ぐことができるエンタープライズ向けのメッセージングサービスは何ですか？",
+        "options": ["Azure DNS", "Azure Logic Apps", "Azure Service Bus", "Azure ExpressRoute"],
+        "answer": 2,
+        "explanation": "「Service Bus」は、信頼性の高い非同期な通信（メッセージキューおよびパブリッシュ/サブスクライブ）を提供し、疎結合なシステム設計を実現します。"
+    },
+    {
+        "question": "Azure Functions において、アクセスがないときは全く費用が発生せず、必要な時だけ自動的に数千インスタンスまでスケールするプランは何ですか？",
+        "options": ["App Service プラン", "Premium プラン", "従量課金プラン (Consumption)", "占有プラン"],
+        "answer": 2,
+        "explanation": "「従量課金プラン (Consumption Plan)」は、真のサーバーレス課金を提供し、負荷がないときは 0 円、急激なアクセス増には自動で爆速スケーリングを行います。"
+    }
+]
