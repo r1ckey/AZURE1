@@ -62,11 +62,11 @@
                     <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                     graph LR
                         subgraph RegionA[リージョン A (東日本)]
-                            LRS[LRS: DC 内に 3 コピー]
-                            ZRS[ZRS: 3 つの AZ に分散]
+                            LRS["LRS - DC 内に 3 コピー"]
+                            ZRS["ZRS - 3 つの AZ に分散"]
                         end
                         RegionA -- ジオレプリケーション --> RegionB[リージョン B (西日本)]
-                        RegionB --> GRS[GRS: 遠隔地へコピー]
+                        RegionB --> GRS["GRS - 遠隔地へコピー"]
                         style RegionA fill:#001d35,stroke:#0078d4;
                         style RegionB fill:#001d35,stroke:#0078d4;
                         style GRS fill:#28a745,stroke:#fff;

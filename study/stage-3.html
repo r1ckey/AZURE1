@@ -62,9 +62,9 @@
                     <p>「誰がどこまで操作できるか」を定義するのが <strong>RBAC</strong> です。Azure では、管理グループ、サブスクリプション、リソースグループといった階層構造に基づいて権限が継承されます。</p>
                     <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                     graph TD
-                        MG[管理グループ: 所有者] -- 継承 --> Sub[サブスクリプション: 継承]
-                        Sub -- 継承 --> RG[リソースグループ: 継承]
-                        RG -- 継承 --> Res[リソース: 継承]
+                        MG["管理グループ - 所有者"] -- 継承 --> Sub["サブスクリプション - 継承"]
+                        Sub -- 継承 --> RG["リソースグループ - 継承"]
+                        RG -- 継承 --> Res["リソース - 継承"]
                         User((User)) -- 割り当て --> MG
                         style MG fill:#0078d4,stroke:#fff;
                         style User fill:#f39c12,stroke:#fff;

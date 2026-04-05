@@ -61,9 +61,9 @@
                     <p>Web サイトの運用に特化したバランサーです。URL パスに基づくルーティングや WAF による保護が可能です。</p>
                     <div class="mermaid" style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
                     graph TD
-                        User((User)) --> FD[Azure Front Door: Global]
-                        FD -- Region A --> AGW1[App Gateway: Region A]
-                        FD -- Region B --> AGW2[App Gateway: Region B]
+                        User((User)) --> FD["Azure Front Door - Global"]
+                        FD -- Region A --> AGW1["App Gateway - Region A"]
+                        FD -- Region B --> AGW2["App Gateway - Region B"]
                         AGW1 --> VM1[VM Cluster]
                         style FD fill:#0078d4,stroke:#fff;
                         style AGW1 fill:#28a745,stroke:#fff;
